@@ -22,7 +22,7 @@ var propTypes = {
   inputStyle: textInputPropTypes.style,
   labelStyle: textPropTypes.style,
   disabled: PropTypes.bool,
-  style: ViewPropTypes.style,
+  style: ViewPropTypes.style
 }
 
 var FloatingLabel  = createReactClass({
@@ -44,7 +44,7 @@ var FloatingLabel  = createReactClass({
     return state
   },
 
-  componentWillReceiveProps (props) {
+  UNSAFE_componentWillReceiveProps (props) {
     if (typeof props.value !== 'undefined' && props.value !== this.state.text) {
       this.setState({ text: props.value, dirty: !!props.value })
       this._animate(!!props.value)
@@ -59,7 +59,8 @@ var FloatingLabel  = createReactClass({
         labelStyle[prop],
         {
           toValue: nextStyle[prop],
-          duration: 200
+          duration: 200,
+          useNativeDriver: false
         },
         Easing.ease
       )
@@ -122,6 +123,16 @@ var FloatingLabel  = createReactClass({
     )
   },
 
+  _renderIconRight (){
+    if(this.props.renderIconRight){
+      return (
+        <View style={styles.iconRight}>
+          {this.props.renderIconRight}
+        </View>
+      );
+    }
+  },
+
   render() {
     var props = {
         autoCapitalize: this.props.autoCapitalize,
@@ -153,7 +164,8 @@ var FloatingLabel  = createReactClass({
         value: this.state.text,
         underlineColorAndroid: this.props.underlineColorAndroid, // android TextInput will show the default bottom border
         onKeyPress: this.props.onKeyPress,
-        activeInputStyle: this.props.activeInputStyle
+        activeInputStyle: this.props.activeInputStyle,
+        renderIconRight: this.props.renderIconRight
       },
       elementStyles = [styles.element];
 
@@ -171,6 +183,8 @@ var FloatingLabel  = createReactClass({
 
     return (
   		<View style={elementStyles}>
+
+        {this._renderIconRight()}
         {this._renderLabel()}
         <TextInput
           {...props}
@@ -210,7 +224,20 @@ var styles = StyleSheet.create({
   },
   activeInputStyle:{
     borderColor: '#3F73A4'
-  },  
+  },
+  inactiveInputStyle:{
+    borderColor: '#EBEFF3'
+  },
+  iconRight: {
+    backgroundColor: 'transparent',
+    position: 'absolute', 
+    justifyContent: 'center',
+    zIndex: 1,
+    right: 0, 
+    marginTop: 0, 
+    paddingRight: 45, 
+    height: 55
+  },
   label: labelStyleObj
 })
 
