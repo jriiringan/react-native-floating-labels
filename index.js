@@ -152,6 +152,7 @@ var FloatingLabel  = createReactClass({
         onChangeText: this.onChangeText,
         onEndEditing: this.updateText,
         onFocus: this._onFocus,
+        ref: this.props.myRef,
         onSubmitEditing: this.props.onSubmitEditing,
         password: this.props.secureTextEntry || this.props.password, // Compatibility
         placeholder: this.props.placeholder,
