@@ -219,8 +219,8 @@ var styles = StyleSheet.create({
     fontSize: 18,
     paddingLeft: 20,
     paddingRight: 20,
-    marginBottom: 16,
-    marginTop: 16,
+    marginBottom: Platform.OS == 'ios' ? 16 : 0,
+    marginTop: Platform.OS == 'ios' ? 16 : 6,
     top: 0
   },
   activeInputStyle:{
@@ -236,7 +236,7 @@ var styles = StyleSheet.create({
     zIndex: 1,
     right: 0, 
     marginTop: 0, 
-    paddingRight: 45, 
+    paddingRight: Platform.OS == 'ios' ? 45 : 20, 
     height: 55
   },
   label: labelStyleObj
